@@ -1,6 +1,9 @@
 package com.gl.lib.empmgmt.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,25 +18,45 @@ public class EmpServiceImp implements EmpService {
 
 	@Override
 	public List<Employee> findAll() {
+//		List<Employee>employees = empRepo.findAll();
+//		for (Employee employee : employees) {
+//			System.out.println(employee.getF_name());
+//		}
 		return empRepo.findAll();
 	}
 
 	@Override
 	public Employee findByID(int theId) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Employee> result= empRepo.findById(theId);
+		Employee theEmployee=null;
+		if(result.isPresent())
+		{
+			theEmployee=result.get();
+		}
+		else
+		{
+			throw new RuntimeException("Didnot find the EmployeeID:"+ theId);
+		}
+		return theEmployee;
 	}
 
 	@Override
 	public void save(Employee theEmp) {
-		// TODO Auto-generated method stub
+		empRepo.save(theEmp);
 
 	}
 
 	@Override
 	public void deleteById(int theId) {
-		// TODO Auto-generated method stub
+		empRepo.deleteById(theId);
 
 	}
+	
+	@Override
+	public Employee updateEmployee(Employee employee) {
+		return empRepo.save(employee);
+	}
+
+	
 
 }

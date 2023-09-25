@@ -8,10 +8,12 @@ public interface EmpService {
 
 	public List<Employee> findAll();
 
-	public Employee findByID(int theId);
+	public Employee findByID(int id);
 
 	public void save(Employee theEmp);
 
-	public void deleteById(int theId);
+	public void deleteById(int empId);
+
+	Employee updateEmployee(Employee employee);
 
 }
